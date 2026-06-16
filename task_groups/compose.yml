@@ -1,0 +1,11 @@
+- name: Render compose template
+  template:
+    src: templates/compose.yml.j2
+    dest: compose.yml
+- name: Clean renderd template
+  file:
+    path: compose.yml
+    state: absent
+  tags: 
+  - never
+  - cleanup

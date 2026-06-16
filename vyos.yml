@@ -10,17 +10,8 @@
       address: null
       ipam: null
   tasks:
-  - name: Render compose template
-    template:
-      src: templates/compose.yml.j2
-      dest: compose.yml
-    tags: ["compose"]
-  - name: Clean renderd template
-    file:
-      path: compose.yml
-      state: absent
-    tags: 
+  - name: Import Compose group
+    import_tasks: task_groups/compose.yml
+    tags:
     - compose
-    - never
-    - cleanup
 
