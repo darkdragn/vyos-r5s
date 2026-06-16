@@ -8,6 +8,7 @@
   copy:
     content: '{ "ipv6": true,  "fixed-cidr-v6": "2001:db8::/64" }'
     dest: /etc/docker/daemon.json
+  notify: Restart docker
 - name: Enable service
   service:
     name: docker

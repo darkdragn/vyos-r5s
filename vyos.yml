@@ -20,4 +20,8 @@
     import_tasks: task_groups/compose.yml
     tags:
     - compose
-
+  handlers:
+  - name: Restart docker
+    service:
+      name: docker
+      state: restarted
