@@ -7,6 +7,7 @@
 1. [Compose setup](#compose-setup)
     1. (Doc)Variables
 1. [Stop talking just give me the steps!!!](#just-the-steps)
+1. [Warnings](#warnings)
 
 
 ## Set up Armbian
