@@ -72,3 +72,8 @@ set service ssh
 - It'll take a second to generate some stuff, like an initial boot config. You can monitor with `docker compose exec -it vyos journalctl -ef`
 - When it's done, run as vyos user: `docker compose exec -it vyos su - vyos`
     
+
+## Warnings
+
+- NAT was choked with GRO on. If you update netplan to include `generic-receive-offload: false` on the interface definition you will start getting full speed
+- Reference the udev caution up above if your aliases stop working, or just update the parent options in your compose.yml
