@@ -1,6 +1,6 @@
 ## TOC
 
-1. [Set up Armbian](#setup-up-armbian)
+1. [Set up Armbian](#set-up-armbian)
     1. Image used
     1. Package installs / Updates
     1. (Maybe) udev fix info (Might not be needed)
