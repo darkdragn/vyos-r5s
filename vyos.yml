@@ -10,12 +10,10 @@
       address: null
       ipam: null
   tasks:
-  - name: Install docker
-    shell:
-      cmd: 'armbian-config --CON001'
+  - name: Import Docker group
+    import_tasks: task_groups/docker.yml
     tags:
-    - never
-    - install
+    - docker
   - name: Udev fix
     lineinfile:
       ## On my system, after first reboot lan2 switched

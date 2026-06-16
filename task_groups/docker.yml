@@ -1,0 +1,15 @@
+- name: Install docker
+  shell:
+    cmd: 'armbian-config --CON001'
+  tags:
+  - never
+  - install
+- name: Populate daemon.json
+  copy:
+    content: '{ "ipv6": true,  "fixed-cidr-v6": "2001:db8::/64" }'
+    dest: /etc/docker/daemon.json
+- name: Enable service
+  service:
+    name: docker
+    state: started
+    enabled: true
