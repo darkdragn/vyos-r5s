@@ -28,3 +28,11 @@
 - Update docker daemon
     - I'm going to add an ansible task for this, but if you'd rather perform things manually: fill in /etc/docker/daemon.json with '{"ipv6": true,  "fixed-cidr-v6": "2001:db8::/64"}' You don't need the single quotes, just using it to separate the json from the other text.
     - By default, docker.service is triggered by docker.socket. This means docker.socket is on at startup, but the daemon doesn't actually start until someone runs a docker command. This means even if the service is `restart: always` the container won't start until someone logs in and runs `docker ps` or any other docker cli command. We don't want that. This is going to be a router/firewall... Do router and firewall things without manual intervention. To fix this just run `systemctl enable --now docker.service`
+
+## Compose setup
+
+I was not brave enough to give it full host networking, so I went with the macvlan driver. This has a couple of drawbacks, though. The first is that each macvlan interface has to have an IP assigned, meaning the interface addresses will be managed by docker not by your Vyos config. At least for untagged vlan. This has no impact on sub interfaces.
+
+- Render your compose:
+    - You can take compose.yml.example and rename it to compose.yml, then update all of the spots called out by comments.
+    - Alternatively, you can fill in the vars at the top of the vyos.yml playbook and run `ansible-playbook -i localhost, vyos.yml --tags compose` and it'll render it for you.
