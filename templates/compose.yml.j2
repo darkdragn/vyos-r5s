@@ -1,0 +1,51 @@
+services:
+  vyos:
+    command: /sbin/init
+    hostname: vyos-arm
+    image: darkdragn/vyos:1.5-rolling-20260613
+    networks: 
+{% if lan1.address %}
+      lan1:
+        ipv4_address: {{ lan1.address }}
+{% else %}
+      lan1: {}
+{% endif %}
+{% if lan2.address %}
+      lan2:
+        ipv4_address: {{ lan2.address }}
+{% else %}
+      lan2: {}
+{% endif %}
+    privileged: true
+    restart: always
+    volumes:
+      - /lib/modules:/lib/modules
+      - ./config:/opt/vyatta/etc/config
+      - ./ssh:/etc/ssh
+networks:
+  lan1:
+    driver: macvlan
+    driver_opts:
+      parent: lan1 
+    enable_ipv4: true
+    enable_ipv6: true
+{% if lan1.ipam %}
+    ipam:
+      config:
+        - subnet: {{ lan1.ipam.subnet }}
+          gateway: {{ lan1.ipam.gateway }}
+          ip_range: {{ lan1.ipam.ip_range }}
+{% endif %}
+  lan2:
+    driver: macvlan
+    driver_opts:
+      parent: lan2 
+    enable_ipv4: true
+    enable_ipv6: true
+{% if lan2.ipam %}
+    ipam:
+      config:
+        - subnet: {{ lan2.ipam.subnet }}
+          gateway: {{ lan2.ipam.gateway }}
+          ip_range: {{ lan2.ipam.ip_range }}
+{% endif %}

@@ -1,0 +1,26 @@
+- hosts: localhost
+  vars:
+    lan1: 
+      address: 192.168.1.241
+      ipam:
+        subnet: 192.168.1.0/24
+        gateway: 192.168.1.1
+        ip_range: 192.168.1.240/29
+    lan2: 
+      address: null
+      ipam: null
+  tasks:
+  - name: Render compose template
+    template:
+      src: templates/compose.yml.j2
+      dest: compose.yml
+    tags: ["compose"]
+  - name: Clean renderd template
+    file:
+      path: compose.yml
+      state: absent
+    tags: 
+    - compose
+    - never
+    - cleanup
+

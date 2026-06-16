@@ -6,7 +6,7 @@ services:
     command: /sbin/init
     ## Added this since syslog complained about it's hostname not resolving
     extra_hosts:
-    - "vyos-arm=192.168.0.251"
+    - "vyos-arm=192.168.0.241"
     hostname: vyos-arm
     image: darkdragn/vyos:1.5-rolling-20260613
     ## Populate the IPs it's going to have on each NIC. You don't have to use both if you don't want, just comment out the network portions for what you're not using
@@ -14,9 +14,9 @@ services:
     # The macvlan driver assigns a unique mac to vyos, the host os and vyos can exist on the same nic without complications.
     # My lan1 goes to my lab, which is on vlan 20, so I don't use untagged traffic on it, so I didn't care what docker iPAM auto assigned to it
     networks: 
-      vyos:
+      lan2:
         ipv4_address: 192.168.0.241
-      lab: {}
+      lan1: {}
     privileged: true
     restart: always
     volumes:
@@ -24,7 +24,7 @@ services:
       - ./config:/opt/vyatta/etc/config
       - ./ssh:/etc/ssh
 networks:
-  vyos:
+  lan2:
     driver: macvlan
     driver_opts:
       parent: lan2 
@@ -36,7 +36,7 @@ networks:
     #     - subnet: 192.168.0.0/24
     #       gateway: 192.168.0.1
     #       ip_range: 192.168.0.240/29 # I chose a block outside of my DHCP range, so I don't accidentally put any other containers up that grab an active IP
-  lab:
+  lan1:
     driver: macvlan
     driver_opts:
       parent: lan1 
