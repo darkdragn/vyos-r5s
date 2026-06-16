@@ -12,7 +12,7 @@
   tasks:
   - name: Install docker
     shell:
-      cmd: `armbian-config --CON001`
+      cmd: 'armbian-config --CON001'
     tags:
     - never
     - install
