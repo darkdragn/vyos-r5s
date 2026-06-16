@@ -33,7 +33,7 @@
 
 ## Compose setup
 
-I was not brave enough to give it full host networking, so I went with the macvlan driver. This has a couple of drawbacks, though. The first is that each macvlan interface has to have an IP assigned, meaning the interface addresses will be managed by docker not by your Vyos config. At least for untagged vlan. This has no impact on sub interfaces.
+I was not brave enough to give it full host networking, so I went with the macvlan driver. This has a couple of drawbacks, though. The first is that each macvlan interface has to have an IP assigned, meaning the interface addresses will be managed by docker not by your Vyos config. At least for untagged traffic. This has no impact on sub interfaces.
 
 - Render your compose:
     - You can take compose.yml.example and rename it to compose.yml, then update all of the spots called out by comments.
