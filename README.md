@@ -36,7 +36,7 @@ I was not brave enough to give it full host networking, so I went with the macvl
 
 - Render your compose:
     - You can take compose.yml.example and rename it to compose.yml, then update all of the spots called out by comments.
-    - Alternatively, you can fill in the vars at the top of the vyos.yml playbook and run `ansible-playbook -i localhost, vyos.yml --tags compose` and it'll render it for you.
+    - Alternatively, you can fill in the vars at the top of the vyos.yml playbook and run `ansible-playbook -i localhost, vyos.yml --tags render` and it'll render it for you.
 - Start it up: `docker compose up -d`
 - It'll take a second to generate some stuff, like an initial boot config. You can monitor with `docker compose exec -it vyos journalctl -ef`
 - When it's done, run as vyos user: `docker compose exec -it vyos su - vyos`
