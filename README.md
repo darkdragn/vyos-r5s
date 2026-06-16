@@ -45,6 +45,8 @@ I was not brave enough to give it full host networking, so I went with the macvl
 ```
 config
 set service ssh
+commit
+save
 ```
 
 - It'll be accessible IAW with whatever you configured in the compose.yml. In the compose the var is services.vyos.networks.lan1.ipv4_address or services.vyos.lan2.ipv4_address. It depends on how you have things wired up. **Warning** Unless you want to mess with rp_filter, I don't recommend having both lan1 and lan2 on the same subnet. In my env, they're two completely different network segments, but if you have them on the same segment with DHCP on, the host armbian os might get an IP on each and have rp_filter problems. Just tweak netplan to disable DHCP on one of them.
