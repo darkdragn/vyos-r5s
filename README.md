@@ -70,5 +70,5 @@ set service ssh
         - Update commented sections of compose.yml; use your own editor, I prefer vim.
 - Start it up: `docker compose up -d`
 - It'll take a second to generate some stuff, like an initial boot config. You can monitor with `docker compose exec -it vyos journalctl -ef`
-- When it's done, run as vyos user: `docker compose exec -it su - vyos`
+- When it's done, run as vyos user: `docker compose exec -it vyos su - vyos`
     
