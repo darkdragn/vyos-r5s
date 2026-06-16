@@ -37,6 +37,17 @@ I was not brave enough to give it full host networking, so I went with the macvl
 - Render your compose:
     - You can take compose.yml.example and rename it to compose.yml, then update all of the spots called out by comments.
     - Alternatively, you can fill in the vars at the top of the vyos.yml playbook and run `ansible-playbook -i localhost, vyos.yml --tags compose` and it'll render it for you.
+- Start it up: `docker compose up -d`
+- It'll take a second to generate some stuff, like an initial boot config. You can monitor with `docker compose exec -it vyos journalctl -ef`
+- When it's done, run as vyos user: `docker compose exec -it su - vyos`
+- You can start the ssh daemon and use it for all future access / configs. Using the standard method:
+```
+config
+set service ssh
+```
+
+- It'll be accessible IAW with whatever you configured in the compose.yml. In the compose the var is services.vyos.networks.lan1.ipv4_address or services.vyos.lan2.ipv4_address. It depends on how you have things wired up. **Warning** Unless you want to mess with rp_filter, I don't recommend having both lan1 and lan2 on the same subnet. In my env, they're two completely different network segments, but if you have them on the same segment with DHCP on, the host armbian os might get an IP on each and have rp_filter problems. Just tweak netplan to disable DHCP on one of them.
+- **Caution** After an update of armbian, my system reported a different PCI path/ID than the udev rules from the base image accounted for. This means wan and lan1 got their aliases, but lan2 was enP1p17s0. If this happens to you, you can just adjust the parent name in compose.yml or you can update /etc/udev/rules.d/70-persistent-net.rules. I also have a manual task with the tags [manual, udev]. You can use it with `ansible-playbook vyos.yml --tags udev`. No guarantee you get the same PCI id I did, though.
 
 
 ## Just the steps
@@ -60,12 +71,4 @@ I was not brave enough to give it full host networking, so I went with the macvl
 - Start it up: `docker compose up -d`
 - It'll take a second to generate some stuff, like an initial boot config. You can monitor with `docker compose exec -it vyos journalctl -ef`
 - When it's done, run as vyos user: `docker compose exec -it su - vyos`
-- You can start the ssh daemon and use it for all future access / configs. Using the standard method:
-```
-config
-set service ssh
-```
-
-- It'll be accessible IAW with whatever you configured in the compose.yml. In the compose the var is services.vyos.networks.lan1.ipv4_address or services.vyos.lan2.ipv4_address. It depends on how you have things wired up. **Warning** Unless you want to mess with rp_filter, I don't recommend having both lan1 and lan2 on the same subnet. In my env, they're two completely different network segments, but if you have them on the same segment with DHCP on, the host armbian os might get an IP on each and have rp_filter problems. Just tweak netplan to disable DHCP on one of them.
-- **Caution** After an update of armbian, my system reported a different PCI path/ID than the udev rules from the base image accounted for. This means wan and lan1 got their aliases, but lan2 was enP1p17s0. If this happens to you, you can just adjust the parent name in compose.yml or you can update /etc/udev/rules.d/70-persistent-net.rules. I also have a manual task with the tags [manual, udev]. You can use it with `ansible-playbook vyos.yml --tags udev`. No guarantee you get the same PCI id I did, though.
     
