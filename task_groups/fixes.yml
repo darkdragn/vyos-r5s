@@ -1,0 +1,14 @@
+- name: Udev fix
+  lineinfile:
+    ## On my system, after first reboot lan2 switched
+    #  from 0001:01:00.0 to 0001:11:00.0 ; 
+    #  Not sure why and it may not happen to you, so this is a manual task
+    path: /etc/udev/rules.d/70-persistent-net.rules
+    regexp: '^SUBSYSTEM.*lan2"'
+    line: 'SUBSYSTEM=="net", ACTION=="add", KERNELS=="0001:11:00.0", NAME:="lan2"'
+    state: present
+  tags:
+  - never
+  - manual
+  - udev
+
