@@ -8,7 +8,7 @@
     1. (Doc)Variables
 
 
-## [Set up Armbian]
+## Set up Armbian
 
 - Download image: Head over [to the armbian R5S page](https://armbian.com/boards/nanopi-r5s) and download your preferred image. I used the debian bookworm image, primarily since the vyos rolling is bookworm based. It shouldn't matter, but for the sake of the kernel, I tried keeping it close.
 - Write to an sdcard: 
