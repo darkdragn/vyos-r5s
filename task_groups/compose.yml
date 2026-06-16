@@ -2,6 +2,8 @@
   template:
     src: templates/compose.yml.j2
     dest: compose.yml
+  tags:
+  - render
 - name: Clean renderd template
   file:
     path: compose.yml
