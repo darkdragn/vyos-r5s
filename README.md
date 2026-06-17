@@ -10,7 +10,7 @@ This is a quick snippet that will get you a working image:
 ```
 ########################
 ### Don't forget to fill this in ###
-TARGET=/dev/sdb # Fill this in with your sdcard block device
+TARGET=/dev/sdX # Fill this in with your sdcard block device
 
 cat vyos-r5s.img.gz | gunzip -c - |dd of=$TARGET bs=4M status=progress
 printf "fix\n" | parted ---pretend-input-tty $TARGET print
